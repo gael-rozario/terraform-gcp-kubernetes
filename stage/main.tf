@@ -1,5 +1,5 @@
 provider "google" {
-  credentials = "${file("~/.secret/angelic-bond-246708-1ef822be66d4.json")}"
+  credentials = "${file("~/.secret/angelic-bond-246708-f9ea847a05d2.json")}"
   project     = "${var.project}"
   region      = "${var.region}"
   version     = "~> 2.13"
@@ -53,4 +53,7 @@ module "ansible_instance" {
   boot_disk_name = "${module.ansible_disk.name}"
   public_ip = "${module.ansible_ip.ipaddress}"
   tags = ["bastion"]
+  labels = {
+    "ansible-host" = "bastion"
+  }
 }

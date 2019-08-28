@@ -11,6 +11,9 @@ variable "public_ip" {}
 variable "tags" {
   type = "list"
 }
+variable "labels" {
+  type = "map"
+}
 
 
 
