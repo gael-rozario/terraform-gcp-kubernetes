@@ -12,6 +12,9 @@ resource "google_compute_instance" "instance" {
         source = "${var.boot_disk_name}"
     }
     tags = "${var.tags}"
+    labels = {
+      ansible_host= "${var.ansible_host}"
+    }
 }
 output "tags" {
   value = "${google_compute_instance.instance.tags}"

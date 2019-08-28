@@ -53,7 +53,5 @@ module "ansible_instance" {
   boot_disk_name = "${module.ansible_disk.name}"
   public_ip = "${module.ansible_ip.ipaddress}"
   tags = ["bastion"]
-  labels = {
-    "ansible-host" = "bastion"
-  }
+  ansible_host = "bastion"
 }

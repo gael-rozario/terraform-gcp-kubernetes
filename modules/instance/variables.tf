@@ -11,9 +11,7 @@ variable "public_ip" {}
 variable "tags" {
   type = "list"
 }
-variable "labels" {
-  type = "map"
-}
+variable "ansible_host" {}
 
 
 
