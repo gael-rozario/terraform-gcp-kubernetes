@@ -55,3 +55,16 @@ module "ansible_instance" {
   tags = ["bastion"]
   ansible_host = "bastion"
 }
+module "kubernetesmaster_instance" {
+  source = "../modules/instance_cluster"
+  env = "${var.env}"
+  instance_count = 2
+  project = "${var.project}"
+  instance_name = "kubemaster"
+  region = "${var.region}"
+  zone = "b"
+  subnet = "${module.stage_vpc.private_subnet_name}"
+  tags = ["kubemaster"]
+  ansible_host = "kubemaster"
+  image = "ansible-base"
+}
