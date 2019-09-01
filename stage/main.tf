@@ -20,7 +20,7 @@ module "stage_vpc_internal_firewall" {
   network = "${module.stage_vpc.vpc_name}"
   portrange = ["0-65535"]
   source_ranges = ["${module.stage_vpc.private_subnet_cidr}","${module.stage_vpc.public_subnet_cidr}"]
-  target_tags = ["test"]
+  target_tags = []
 }
 module "stage-vpc-bastion-firewall" {
   source = "../modules/firewall"
