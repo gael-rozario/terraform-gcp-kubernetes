@@ -37,7 +37,7 @@ module "ansible_disk" {
   env = "${var.env}"
   name = "ansible-master"
   zone = "${var.region}-b"
-  image = "ansible-master"
+  image = "ansible-master-image"
 }
 module "ansible_ip" {
   source = "../modules/ipaddress"
