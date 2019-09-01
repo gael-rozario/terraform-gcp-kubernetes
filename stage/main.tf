@@ -58,7 +58,7 @@ module "ansible_instance" {
 module "kubernetesmaster_instance" {
   source = "../modules/instance_cluster"
   env = "${var.env}"
-  instance_count = 2
+  instance_count = 1
   project = "${var.project}"
   instance_name = "kubemaster"
   region = "${var.region}"
@@ -66,5 +66,18 @@ module "kubernetesmaster_instance" {
   subnet = "${module.stage_vpc.private_subnet_name}"
   tags = ["kubemaster"]
   ansible_host = "kubemaster"
+  image = "ansible-base"
+}
+module "kubernetesworker_instance" {
+  source = "../modules/instance_cluster"
+  env = "${var.env}"
+  instance_count = 2
+  project = "${var.project}"
+  instance_name = "kubeworkers"
+  region = "${var.region}"
+  zone = "b"
+  subnet = "${module.stage_vpc.private_subnet_name}"
+  tags = ["kubeworkers"]
+  ansible_host = "kubeworkers"
   image = "ansible-base"
 }
