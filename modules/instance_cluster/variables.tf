@@ -11,7 +11,7 @@ variable "type" {
 }
 variable "subnet" {}
 variable "public_ip" {
-  default = ""
+  default = "None"
 }
 variable "tags" {
   type = "list"
