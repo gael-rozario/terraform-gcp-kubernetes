@@ -51,5 +51,8 @@ output "public_subnet_cidr" {
   value = "${google_compute_subnetwork.public-subnet.ip_cidr_range}"
 }
 
+output "nat_ips"{
+  value = "${google_compute_router_nat.private-nat.nat_ips}"
+} 
 
 
