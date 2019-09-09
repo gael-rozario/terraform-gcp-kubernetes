@@ -40,10 +40,6 @@ module "ansible_disk" {
   zone = "${var.region}-b"
   image = "ansible-master-image"
 }
-module "ansible_ip" {
-  source = "../modules/ipaddress"
-  name = "ansible-ip"
-}
 module "ansible_instance" {
   source = "../modules/instance"
   env = "${var.env}"
@@ -53,7 +49,6 @@ module "ansible_instance" {
   zone = "b"
   subnet = "${module.stage_vpc.public_subnet_name}"
   boot_disk_name = "${module.ansible_disk.name}"
-  public_ip = "${module.ansible_ip.ipaddress}"
   tags = ["bastion"]
   ansible_host = "bastion"
 }
