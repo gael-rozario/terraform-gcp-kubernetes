@@ -23,17 +23,12 @@ resource "google_compute_router" "private-router" {
     asn = 64514
   }
 }
-resource "google_compute_address" "nat-ip"{
-  name = "${var.env}-nat-ip"
-  region = "${var.region}"
-}
 resource "google_compute_router_nat" "private-nat" {
   name = "${var.env}-private-nat"
   router = "${var.private-router}"
   region = "${var.region}"
   nat_ip_allocate_option = "AUTO_ONLY"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
-  nat_ips =[google_compute_address.nat-ip.self_link]
 }
 
 output "vpc_name" {
