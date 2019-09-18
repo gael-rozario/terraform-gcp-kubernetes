@@ -10,9 +10,6 @@ variable "type" {
   default = "f1-micro"
 }
 variable "subnet" {}
-variable "public_ip" {
-  default = ""
-}
 variable "tags" {
   type = "list"
 }

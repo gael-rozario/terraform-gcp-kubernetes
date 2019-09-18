@@ -6,9 +6,6 @@ resource "google_compute_instance" "instance" {
     allow_stopping_for_update = true
     network_interface {
       subnetwork = "${var.subnet}"
-      access_config {
-        nat_ip = "${var.public_ip}"
-    }
     }
     boot_disk{
         initialize_params{
