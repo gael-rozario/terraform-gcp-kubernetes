@@ -65,7 +65,7 @@ module "kubernetesmaster_instance" {
   tags = ["kubemaster"]
   ansible_host = "kubemaster"
   image = "ansible-base"
-  public_ip = "${module.stage_vpc.nat_ips[0]}"
+  public_ip = ""
 }
 module "kubernetesworker_instance" {
   source = "../modules/instance_cluster"

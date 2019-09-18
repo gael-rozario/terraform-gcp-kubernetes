@@ -3,6 +3,7 @@ resource "google_compute_instance" "instance" {
     name = "${var.env}-${var.instance_name}-${count.index+1}"
     zone = "${var.region}-${var.zone}"
     machine_type  = "${var.type}"
+    allow_stopping_for_update = true
     network_interface {
       subnetwork = "${var.subnet}"
       access_config {

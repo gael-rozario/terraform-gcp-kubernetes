@@ -23,12 +23,16 @@ resource "google_compute_router" "private-router" {
     asn = 64514
   }
 }
+resource "google_compute_address" "nat_ip"{
+  name = "${var.env}-nat-ip"
+}
 resource "google_compute_router_nat" "private-nat" {
   name = "${var.env}-private-nat"
   router = "${var.private-router}"
   region = "${var.region}"
-  nat_ip_allocate_option = "AUTO_ONLY"
+  nat_ip_allocate_option = "MANUAL_ONLY"
   source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+  nat_ips = [google_compute_address.nat_ip.self_link]
 }
 
 output "vpc_name" {
@@ -51,8 +55,8 @@ output "public_subnet_cidr" {
   value = "${google_compute_subnetwork.public-subnet.ip_cidr_range}"
 }
 
-output "nat_ips"{
-  value = "${google_compute_router_nat.private-nat.nat_ips}"
+output "nat_ip"{
+  value = "${google_compute_address.nat_ip.address}"
 } 
 
 
