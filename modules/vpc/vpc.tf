@@ -31,8 +31,12 @@ resource "google_compute_router_nat" "private-nat" {
   router = "${var.private-router}"
   region = "${var.region}"
   nat_ip_allocate_option = "MANUAL_ONLY"
-  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
-  nat_ips = [google_compute_address.nat_ip.self_link]
+  source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
+  subnetwork {
+        name  = "${var.private_subnet_name}"
+        source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
+    }
+  nat_ips = []
 }
 
 output "vpc_name" {
