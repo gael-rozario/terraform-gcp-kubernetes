@@ -6,6 +6,5 @@ variable "private_subnet_cidr" {}
 variable "public_subnet_cidr" {}
 variable "vpc" {}
 variable "project" {}
-variable "private-router" {
-  
-}
+variable "vpc_router_name" {}
+variable "private_subnet"{}

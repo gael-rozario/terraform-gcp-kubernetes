@@ -12,7 +12,8 @@ module "stage_vpc" {
   public_subnet_cidr = "10.10.128.0/17"
   vpc = "${module.stage_vpc.vpc_name}"
   project = "${var.project}"
-  private-router = "${module.stage_vpc.private_router_name}"
+  vpc_router_name = "${module.stage_vpc.vpc_router_name}"
+  private_subnet = "${module.stage_vpc.private_subnet_name}"
 }
 module "stage_vpc_internal_firewall" {
   source = "../modules/firewall"

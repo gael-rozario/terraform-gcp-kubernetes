@@ -15,12 +15,19 @@ resource "google_compute_subnetwork" "public-subnet" {
   ip_cidr_range = "${var.public_subnet_cidr}"
   network = "${var.vpc}"
 }
-resource "google_compute_router" "private-router" {
-  name = "${var.env}-private-router"
+resource "google_compute_router" "vpc-router" {
+  name = "${var.env}-vpc-router"
   region = "${var.region}"
   network = "${var.vpc}"
   bgp {
     asn = 64514
+    advertise_mode  = "CUSTOM"
+    advertised_ip_ranges {
+     range = "${var.private_subnet_cidr}"
+    }
+    advertised_ip_ranges {
+     range = "${var.public_subnet_cidr}"
+    }
   }
 }
 resource "google_compute_address" "nat_ip"{
@@ -28,24 +35,22 @@ resource "google_compute_address" "nat_ip"{
 }
 resource "google_compute_router_nat" "private-nat" {
   name = "${var.env}-private-nat"
-  router = "${var.private-router}"
+  router = "${var.vpc_router_name}" 
   region = "${var.region}"
   nat_ip_allocate_option = "MANUAL_ONLY"
   source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
   subnetwork {
-        name  = "${var.private_subnet_name}"
-        source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
-    }
-  nat_ips = []
+    name  = "${var.private_subnet}"
+    source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
+  }
+  nat_ips = [google_compute_address.nat_ip.self_link] 
 }
-
 output "vpc_name" {
   value = "${google_compute_network.vpc.name}"
 }
-output "private_router_name" {
-  value = "${google_compute_router.private-router.name}"
+output "vpc_router_name" {
+  value = "${google_compute_router.vpc-router.name}"
 }
-
 output "private_subnet_name" {
   value = "${google_compute_subnetwork.private-subnet.name}"
 }
@@ -58,9 +63,4 @@ output "private_subnet_cidr" {
 output "public_subnet_cidr" {
   value = "${google_compute_subnetwork.public-subnet.ip_cidr_range}"
 }
-
-output "nat_ip"{
-  value = "${google_compute_address.nat_ip.address}"
-} 
-
 
