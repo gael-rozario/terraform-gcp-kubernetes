@@ -40,7 +40,7 @@ resource "google_compute_router_nat" "private-nat" {
   nat_ip_allocate_option = "MANUAL_ONLY"
   source_subnetwork_ip_ranges_to_nat = "LIST_OF_SUBNETWORKS"
   subnetwork {
-    name  = "${var.private_subnet}"
+    name  = google_compute_subnetwork.private-subnet.self_link
     source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
   }
   nat_ips = [google_compute_address.nat_ip.self_link] 

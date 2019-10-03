@@ -39,7 +39,7 @@ module "ansible_disk" {
   env = "${var.env}"
   name = "ansible-master"
   zone = "${var.region}-b"
-  image = "ansible-master-image"
+  image = "ubuntu-16-ansible-master"
 }
 module "ansible_instance" {
   source = "../modules/instance"
@@ -65,7 +65,7 @@ module "kubernetesmaster_instance" {
   subnet = "${module.stage_vpc.private_subnet_name}"
   tags = ["kubemaster"]
   ansible_host = "kubemaster"
-  image = "ansible-base"
+  image = "ubuntu-16-ansible-node"
 }
 module "kubernetesworker_instance" {
   source = "../modules/instance_cluster"
@@ -79,5 +79,5 @@ module "kubernetesworker_instance" {
   subnet = "${module.stage_vpc.private_subnet_name}"
   tags = ["kubeworkers"]
   ansible_host = "kubeworkers"
-  image = "ansible-base"
+  image = "ubuntu-16-ansible-node"
 }
